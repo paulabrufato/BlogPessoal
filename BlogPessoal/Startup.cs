@@ -1,3 +1,5 @@
+using BlogPessoal.src.data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +23,16 @@ namespace BlogPessoal
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.json")
                 .Build();
+            services.AddDbContext<BlogPessoalContexto>(opt => opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, BlogPessoalContexto contexto)
         {
             if (env.IsDevelopment())
             {
+                contexto.Database.EnsureCreated(); 
                 app.UseDeveloperExceptionPage();
             }
 
