@@ -16,6 +16,8 @@ namespace BlogPessoal.src.modelos
         [Required, StringLength(30)]
         public string Descricao { get; set; } 
 
+        public string Foto { get; set; }
+
         [ForeignKey("fk_usuario")]
         public UsuarioModelo Criador { get; set; }
 
