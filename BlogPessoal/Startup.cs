@@ -12,20 +12,28 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlogPessoal.src.repositorios;
 using BlogPessoal.src.repositorios.implementacoes;
+using BlogPessoal.src.servicos;
+using BlogPessoal.src.servicos.implementacoes;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BlogPessoal
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            IConfigurationRoot config = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
-            services.AddDbContext<BlogPessoalContexto>(opt => opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<BlogPessoalContexto>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddScoped<IUsuario, UsuarioRepositorio>();
             services.AddScoped<ITema, TemaRepositorio>();
@@ -33,6 +41,30 @@ namespace BlogPessoal
 
             services.AddCors();
             services.AddControllers();
+
+            // Configuração de Serviços
+            services.AddScoped<IAutenticacao, AutenticacaoServicos>();
+            // Configuração do Token Autenticação JWTBearer
+            var chave = Encoding.ASCII.GetBytes(Configuration["Settings:Secret"]);
+            services.AddAuthentication(a =>
+            {
+                a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(b =>
+            {
+                b.RequireHttpsMetadata = false;
+                b.SaveToken = true;
+                b.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(chave),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            }
+            );
+
+
 
         }
 
@@ -52,6 +84,10 @@ namespace BlogPessoal
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 
+            // Autenticação e Autorização
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

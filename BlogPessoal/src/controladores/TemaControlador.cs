@@ -1,5 +1,6 @@
 using BlogPessoal.src.dtos;
 using BlogPessoal.src.repositorios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogPessoal.src.controladores
@@ -22,6 +23,7 @@ namespace BlogPessoal.src.controladores
 
         #region Métodos
         [HttpGet]
+        [Authorize]
         public IActionResult PegarTodosTemas()
         {
             var lista = _repositorio.PegarTodosTemas();
@@ -32,6 +34,7 @@ namespace BlogPessoal.src.controladores
         }
 
         [HttpGet("id/{idTema}")]
+        [Authorize]
         public IActionResult PegarTemaPeloId([FromRoute] int idTema)
         {
             var tema = _repositorio.PegarTemaPeloId(idTema);
@@ -42,6 +45,7 @@ namespace BlogPessoal.src.controladores
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult PegarTemasPelaDescricao([FromQuery] string
         descricaoTema)
         {
@@ -53,6 +57,7 @@ namespace BlogPessoal.src.controladores
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult NovoTema([FromBody] NovoTemaDTO tema)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -63,6 +68,7 @@ namespace BlogPessoal.src.controladores
         }
 
         [HttpPut]
+        [Authorize(Roles = "ADMINISTRADOR")]
         public IActionResult AtualizarTema([FromBody] AtualizarTemaDTO tema)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -73,6 +79,7 @@ namespace BlogPessoal.src.controladores
         }
 
         [HttpDelete("deletar/{idTema}")]
+        [Authorize(Roles = "ADMINISTRADOR")]
         public IActionResult DeletarTema([FromRoute] int idTema)
         {
             _repositorio.DeletarTema(idTema);
