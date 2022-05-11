@@ -1,9 +1,12 @@
 using System;
 using BlogPessoal.src.dtos;
+using BlogPessoal.src.modelos;
 using BlogPessoal.src.repositorios;
 using BlogPessoal.src.servicos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlogPessoal.src.controladores
 {
@@ -13,24 +16,31 @@ namespace BlogPessoal.src.controladores
     public class UsuarioControlador : ControllerBase
     {
         #region Atributos
+
         private readonly IUsuario _repositorio;
         private readonly IAutenticacao _servicos;
+
         #endregion
+
 
         #region Construtores
-        public UsuarioControlador(IUsuario repositorio, IAutenticacao servicos)
+
+        public UsuarioControlador(IUsuario repositorio, IAutenticacao servico)
         {
             _repositorio = repositorio;
-            _servicos = servicos;
+            _servicos = servico;
         }
+
         #endregion
 
+
         #region Métodos
+
         [HttpGet("id/{idUsuario}")]
         [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
-        public IActionResult PegarUsuarioPeloId([FromRoute] int idUsuario)
+        public async Task<ActionResult> PegarUsuarioPeloIdAsync([FromRoute] int idUsuario)
         {
-            var usuario = _repositorio.PegarUsuarioPeloId(idUsuario);
+            var usuario = await _repositorio.PegarUsuarioPeloIdAsync(idUsuario);
 
             if (usuario == null) return NotFound();
 
@@ -39,20 +49,20 @@ namespace BlogPessoal.src.controladores
 
         [HttpGet]
         [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
-        public IActionResult PegarUsuariosPeloNome([FromQuery] string nomeUsuario)
+        public async Task<ActionResult> PegarUsuariosPeloNomeAsync([FromQuery] string nomeUsuario)
         {
-            var usuarios = _repositorio.PegarUsuarioPeloNome(nomeUsuario);
+            var usuarios = await _repositorio.PegarUsuariosPeloNomeAsync(nomeUsuario);
 
             if (usuarios.Count < 1) return NoContent();
 
-            return Ok(usuarios);
+             return Ok(usuarios);
         }
 
         [HttpGet("email/{emailUsuario}")]
         [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
-        public IActionResult PegarUsuarioPeloEmail([FromRoute] string emailUsuario)
+        public async Task<ActionResult> PegarUsuarioPeloEmailAsync([FromRoute] string emailUsuario)
         {
-            var usuario = _repositorio.PegarUsuarioPeloEmail(emailUsuario);
+            var usuario = await _repositorio.PegarUsuarioPeloEmailAsync(emailUsuario);
 
             if (usuario == null) return NotFound();
 
@@ -61,12 +71,13 @@ namespace BlogPessoal.src.controladores
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult NovoUsuario([FromBody] NovoUsuarioDTO usuario)
+        public async Task<ActionResult> NovoUsuarioAsync([FromBody] NovoUsuarioDTO usuario)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if(!ModelState.IsValid) return BadRequest();
+
             try
             {
-                _servicos.CriarUsuarioSemDuplicar(usuario);
+                await _servicos.CriarUsuarioSemDuplicarAsync(usuario);
                 return Created($"api/Usuarios/email/{usuario.Email}", usuario);
             }
             catch (Exception ex)
@@ -77,24 +88,24 @@ namespace BlogPessoal.src.controladores
 
         [HttpPut]
         [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
-        public IActionResult AtualizarUsuario([FromBody] AtualizarUsuarioDTO usuario)
+        public async Task<ActionResult> AtualizarUsuarioAsync([FromBody] AtualizarUsuarioDTO usuario)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if(!ModelState.IsValid) return BadRequest();
 
             usuario.Senha = _servicos.CodificarSenha(usuario.Senha);
-            
-            _repositorio.AtualizarUsuario(usuario);
+
+            await _repositorio.AtualizarUsuarioAsync(usuario);
             return Ok(usuario);
         }
 
         [HttpDelete("deletar/{idUsuario}")]
         [Authorize(Roles = "ADMINISTRADOR")]
-        public IActionResult DeletarUsuario([FromRoute] int idUsuario)
+        public async Task<ActionResult> DeletarUsuarioAsync([FromRoute] int idUsuario)
         {
-            _repositorio.DeletarUsuario(idUsuario);
-
+            await _repositorio.DeletarUsuarioAsync(idUsuario);
             return NoContent();
         }
+
         #endregion
     }
 }

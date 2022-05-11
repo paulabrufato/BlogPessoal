@@ -27,7 +27,6 @@ namespace BlogPessoal.src.modelos
         [Required]
         public TipoUsuario Tipo { get; set; }
 
-
         [JsonIgnore]
         public List<PostagemModelo> MinhasPostagens { get; set; }
     }

@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BlogPessoal.src.data;
 using BlogPessoal.src.dtos;
 using BlogPessoal.src.modelos;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogPessoal.src.repositorios.implementacoes
 {
     public class UsuarioRepositorio : IUsuario
     {
-        #region Atributos
+         #region Atributos
 
         private readonly BlogPessoalContexto _contexto;
 
         #endregion Atributos
-
 
         #region Construtores
 
@@ -24,58 +25,55 @@ namespace BlogPessoal.src.repositorios.implementacoes
 
         #endregion Construtores
 
+        #region Métodos
 
-        #region Metodos
-
-        public void AtualizarUsuario(AtualizarUsuarioDTO usuario)
+        public async Task<UsuarioModelo> PegarUsuarioPeloIdAsync(int id)
         {
-        var usuarioExistente = PegarUsuarioPeloId(usuario.Id);
-        usuarioExistente.Nome = usuario.Nome;
-        usuarioExistente.Senha = usuario.Senha;
-        usuarioExistente.Foto = usuario.Foto;
-        _contexto.Usuarios.Update(usuarioExistente);
-        _contexto.SaveChanges();
+            return await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public void DeletarUsuario(int id)
+        public async Task<List<UsuarioModelo>> PegarUsuariosPeloNomeAsync(string nome)
         {
-        _contexto.Usuarios.Remove(PegarUsuarioPeloId(id));
-        _contexto.SaveChanges();
+            return await _contexto.Usuarios
+                        .Where(u => u.Nome.Contains(nome))
+                        .ToListAsync();
         }
 
-
-        public void NovoUsuario(NovoUsuarioDTO usuario)
+        public async Task<UsuarioModelo> PegarUsuarioPeloEmailAsync(string email)
         {
-        _contexto.Usuarios.Add(new UsuarioModelo
-        {
-        Email = usuario.Email,
-        Nome = usuario.Nome,
-        Senha = usuario.Senha,
-        Foto = usuario.Foto,
-        Tipo = usuario.Tipo
-        });
-        _contexto.SaveChanges();
+            return await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-
-        public UsuarioModelo PegarUsuarioPeloEmail(string email)
+        public async Task NovoUsuarioAsync(NovoUsuarioDTO usuario)
         {
-        return _contexto.Usuarios.FirstOrDefault(u => u.Email == email);
+            await _contexto.Usuarios.AddAsync(new UsuarioModelo
+            {
+                Email = usuario.Email,
+                Nome = usuario.Nome,
+                Senha = usuario.Senha,
+                Foto = usuario.Foto,
+                Tipo = usuario.Tipo
+            });
+
+            await _contexto.SaveChangesAsync();
         }
 
-
-        public UsuarioModelo PegarUsuarioPeloId(int id)
+        public async Task AtualizarUsuarioAsync(AtualizarUsuarioDTO usuario)
         {
-            return _contexto.Usuarios.FirstOrDefault(u => u.Id == id);
+            var usuarioExistente = await PegarUsuarioPeloIdAsync(usuario.Id);
+            usuarioExistente.Nome = usuario.Nome;
+            usuarioExistente.Senha = usuario.Senha;
+            usuarioExistente.Foto = usuario.Foto;
+            _contexto.Usuarios.Update(usuarioExistente);
+            await _contexto.SaveChangesAsync();
         }
 
-        public List<UsuarioModelo> PegarUsuarioPeloNome(string nome)
+        public async Task DeletarUsuarioAsync(int id)
         {
-        return _contexto.Usuarios
-        .Where(u => u.Nome.Contains(nome))
-        .ToList();
+            _contexto.Usuarios.Remove(await PegarUsuarioPeloIdAsync(id));
+            await _contexto.SaveChangesAsync();
         }
 
-        #endregion Metodos
+        #endregion Métodos
     }
 }
