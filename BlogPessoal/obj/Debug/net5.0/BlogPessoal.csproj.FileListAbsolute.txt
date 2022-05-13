@@ -53,3 +53,8 @@ C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPe
 C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.genruntimeconfig.cache
 C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\obj\Debug\net5.0\ref\BlogPessoal.dll
 C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.MvcApplicationPartsAssemblyInfo.cs

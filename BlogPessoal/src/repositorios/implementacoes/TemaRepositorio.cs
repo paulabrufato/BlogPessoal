@@ -8,6 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogPessoal.src.repositorios.implementacoes
 {
+    /// <summary>
+    /// <para>Resumo: Classe responsavel por implementar ITema</para>
+    /// <para>Criado por: Paula Brufato</para>
+    /// <para>Versão: 1.0</para>
+    /// <para>Data: 13/05/2022</para>
+    /// </summary>
     public class TemaRepositorio : ITema
     {
      #region Atributos
@@ -28,17 +34,30 @@ namespace BlogPessoal.src.repositorios.implementacoes
 
      
         #region Métodos
-
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar todos os temas</para>
+        /// </summary>     
+        /// <return>Lista TemaModelo</return>
         public async Task<List<TemaModelo>> PegarTodosTemasAsync() 
         {
             return await _contexto.Temas.ToListAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar um tema pelo Id</para>
+        /// </summary>
+        /// <param name="id">Id do tema</param>
+        /// <return>TemaModelo</return>
         public async Task<TemaModelo> PegarTemaPeloIdAsync(int id)
         {
             return await _contexto.Temas.FirstOrDefaultAsync(t => t.Id == id);
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar um tema pela descricao</para>
+        /// </summary>
+        /// <param name="descricao">Descrição do tema</param>
+        /// <return>Lista TemaModelo</return>
         public async Task<List<TemaModelo>> PegarTemasPelaDescricaoAsync(string descricao)
         {
             return await _contexto.Temas
@@ -46,6 +65,10 @@ namespace BlogPessoal.src.repositorios.implementacoes
                             .ToListAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para salvar um novo tema</para>
+        /// </summary>
+        /// <param name="tema">NovoTemaDTO</param>
         public async Task NovoTemaAsync(NovoTemaDTO tema)
         {
             await _contexto.Temas.AddAsync(new TemaModelo
@@ -56,6 +79,10 @@ namespace BlogPessoal.src.repositorios.implementacoes
             await _contexto.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para atualizar um tema</para>
+        /// </summary>
+        /// <param name="tema">AtualizarTemaDTO</param>
         public async Task AtualizarTemaAsync(AtualizarTemaDTO tema)  
         {
             var temaExistente = await PegarTemaPeloIdAsync(tema.Id);
@@ -64,13 +91,15 @@ namespace BlogPessoal.src.repositorios.implementacoes
             await _contexto.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para deletar um tema</para>
+        /// </summary>
+        /// <param name="id">Id do tema</param>
         public async Task DeletarTemaAsync(int id)
         {
             _contexto.Temas.Remove(await PegarTemaPeloIdAsync(id));
             await _contexto.SaveChangesAsync();
-        }
-            
+        }         
         #endregion Métodos
     }
-
 }    

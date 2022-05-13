@@ -64,8 +64,6 @@ namespace BlogPessoal.src.dtos
             Descricao = descricao;
             Foto = foto;
             DescricaoTema = descricaoTema;
-        }
-      
+        }      
     }
-
 }

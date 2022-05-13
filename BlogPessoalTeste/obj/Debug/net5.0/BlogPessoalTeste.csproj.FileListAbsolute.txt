@@ -136,3 +136,8 @@ c:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPe
 c:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\obj\Debug\net5.0\BlogPessoalTeste.pdb
 c:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\obj\Debug\net5.0\BlogPessoalTeste.genruntimeconfig.cache
 c:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\obj\Debug\net5.0\ref\BlogPessoalTeste.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoalTeste\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll

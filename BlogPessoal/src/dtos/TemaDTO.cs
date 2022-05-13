@@ -37,5 +37,4 @@ namespace BlogPessoal.src.dtos
             Descricao = descricao;
         }
     }
-
 }

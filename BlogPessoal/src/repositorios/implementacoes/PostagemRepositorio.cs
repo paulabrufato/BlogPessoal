@@ -8,6 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogPessoal.src.repositorios.implementacoes
 {
+    /// <summary>
+    /// <para>Resumo: Classe responsavel por implementar IPostagem</para>
+    /// <para>Criado por: Paula Brufato</para>
+    /// <para>Versão: 1.0</para>
+    /// <para>Data: 13/05/2022</para>
+    /// </summary>
     public class PostagemRepositorio : IPostagem
     {
      #region Atributos
@@ -28,7 +34,10 @@ namespace BlogPessoal.src.repositorios.implementacoes
 
      
         #region Métodos
-
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar todas as postagens</para>
+        /// </summary>     
+        /// <return>Lista PostagemModelo</return>
         public async Task<List<PostagemModelo>> PegarTodasPostagensAsync() 
         {
             return await _contexto.Postagens
@@ -37,6 +46,11 @@ namespace BlogPessoal.src.repositorios.implementacoes
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar uma postagem pelo Id</para>
+        /// </summary>
+        /// <param name="id">Id da postagem</param>
+        /// <return>PostagemModelo</return>
         public async Task<PostagemModelo> PegarPostagemPeloIdAsync(int id) 
         {
             return await _contexto.Postagens
@@ -45,6 +59,13 @@ namespace BlogPessoal.src.repositorios.implementacoes
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para pegar postagens por pesquisa</para>
+        /// </summary>
+        /// <param name="titulo">Título da postagem</param>
+        /// <param name="descricaoTema">Descrição do tema da postagem</param>
+        /// <param name="nomeCriador">Nome do criador da postagem</param>
+        /// <return>Lista PostagemModelo</return>
         public async Task<List<PostagemModelo>> PegarPostagensPorPesquisaAsync(
             string titulo,
             string descricaoTema,
@@ -115,6 +136,10 @@ namespace BlogPessoal.src.repositorios.implementacoes
             }
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para salvar uma nova postagem</para>
+        /// </summary>
+        /// <param name="postagem">NovaPostagemDTO</param>
         public async Task NovaPostagemAsync(NovaPostagemDTO postagem)
         {
             await _contexto.Postagens.AddAsync(new PostagemModelo
@@ -128,6 +153,10 @@ namespace BlogPessoal.src.repositorios.implementacoes
             await _contexto.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para atualizar uma postagem</para>
+        /// </summary>
+        /// <param name="postagem">AtualizarPostagemDTO</param>
         public async Task AtualizarPostagemAsync(AtualizarPostagemDTO postagem)  
         {
             var postagemExistente = await PegarPostagemPeloIdAsync(postagem.Id);
@@ -140,14 +169,15 @@ namespace BlogPessoal.src.repositorios.implementacoes
             await _contexto.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// <para>Resumo: Método assíncrono para deletar uma postagem</para>
+        /// </summary>
+        /// <param name="id">Id da postagem</param>
         public async Task DeletarPostagemAsync(int id)   
         {
             _contexto.Postagens.Remove(await PegarPostagemPeloIdAsync(id));
             await _contexto.SaveChangesAsync();
-        }
-            
-        #endregion Métodos
-    
+        }            
+        #endregion Métodos   
     }
-
 }

@@ -30,7 +30,14 @@ namespace BlogPessoal.src.controladores
 
 
         #region Métodos
-
+        /// <summary>
+        /// Resumo: Autenticação
+        /// </summary>
+        /// <param name="autenticacao">string</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="400">Retorna erro na requisição</response>
+        /// <response code="200">Retorna autorizado</response>
+        /// <response code="401">Retorna não autorizado</response>
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> Autenticar([FromBody] AutenticarDTO autenticacao)
@@ -47,7 +54,6 @@ namespace BlogPessoal.src.controladores
                 return Unauthorized(ex.Message);
             }
         }
-
         #endregion
     }
 }

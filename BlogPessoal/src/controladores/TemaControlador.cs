@@ -29,7 +29,12 @@ namespace BlogPessoal.src.controladores
 
 
         #region Métodos
-
+        /// <summary>
+        /// Resumo: Pegar todos os temas
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retornar todos os temas</response>
+        /// <response code="204">Sem conteúdo</response>
         [HttpGet]
         [Authorize]
         public async Task<ActionResult> PegarTodosTemasAsync()
@@ -41,6 +46,13 @@ namespace BlogPessoal.src.controladores
             return Ok(lista);
         }
 
+        /// <summary>
+        /// Resumo: Pegar tema pelo Id
+        /// </summary>
+        /// <param name="idTema">int</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retorna o tema</response>
+        /// <response code="404">Tema não existente</response>
         [HttpGet("id/{idTema}")]
         [Authorize]
         public async Task<ActionResult> PegarTemaPeloIdAsync([FromRoute] int idTema)
@@ -52,6 +64,13 @@ namespace BlogPessoal.src.controladores
             return Ok(tema);
         }
 
+        /// <summary>
+        /// Resumo: Pegar temas pela descrição
+        /// </summary>
+        /// <param name="descricaoTema">string</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="200">Retornar tema</response>
+        /// <response code="204">Tema sem conteúdo</response>
         [HttpGet("pesquisa")]
         [Authorize]
         public async Task<ActionResult> PegarTemasPelaDescricaoAsync([FromQuery] string descricaoTema)
@@ -63,6 +82,22 @@ namespace BlogPessoal.src.controladores
             return Ok(temas);
         }
 
+        /// <summary>
+        /// Resumo: Criar novo Tema
+        /// </summary>
+        /// <param name="tema">NovoTemaDTO</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     POST /api/Tema
+        ///     {
+        ///        "descricao": "C#"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Retorna tema criado</response>
+        /// <response code="400">Erro na requisição</response>
         [HttpPost]
         [Authorize]
         public async Task<ActionResult> NovoTemaAsync([FromBody] NovoTemaDTO tema)
@@ -74,6 +109,22 @@ namespace BlogPessoal.src.controladores
             return Created($"api/Temas", tema);
         }
 
+        /// <summary>
+        /// Resumo: Atualizar Tema
+        /// </summary>
+        /// <param name="tema">AtualizarTemaDTO</param>
+        /// <returns>ActionResult</returns>
+        /// <remarks>
+        /// Exemplo de requisição:
+        ///
+        ///     PUT /api/Tema
+        ///     {
+        ///        "descricao": "Python"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Retorna tema atualizado</response>
+        /// <response code="400">Erro na requisição</response>
         [HttpPut]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> AtualizarTema([FromBody] AtualizarTemaDTO tema)
@@ -85,6 +136,12 @@ namespace BlogPessoal.src.controladores
             return Ok(tema);
         }
 
+        /// <summary>
+        /// Resumo: Deletar tema pelo Id
+        /// </summary>
+        /// <param name="idTema">int</param>
+        /// <returns>ActionResult</returns>
+        /// <response code="204">Tema deletado</response>
         [HttpDelete("deletar/{idTema}")]
         [Authorize(Roles = "ADMINISTRADOR")]
         public async Task<ActionResult> DeletarTema([FromRoute] int idTema)
@@ -92,7 +149,6 @@ namespace BlogPessoal.src.controladores
             await _repositorio.DeletarTemaAsync(idTema);
             return NoContent();
         }
-
         #endregion
     }
 }
