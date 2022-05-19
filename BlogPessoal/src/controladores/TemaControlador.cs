@@ -119,6 +119,7 @@ namespace BlogPessoal.src.controladores
         ///
         ///     PUT /api/Tema
         ///     {
+        ///        "id": "1",   
         ///        "descricao": "Python"
         ///     }
         ///

@@ -129,6 +129,7 @@ namespace BlogPessoal.src.controladores
         ///
         ///     PUT /api/Postagem
         ///     {
+        ///        "id": "1",      
         ///        "titulo": "C# in 2022",
         ///        "descricao": "C# in 2022 is the future of programming",
         ///        "foto": "URLPHOTO",

@@ -58,3 +58,5 @@ C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPe
 C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\bin\Debug\net5.0\BlogPessoal.xml
+C:\Users\paula\OneDrive\Área de Trabalho\Atividades\BPVSCode\BlogPessoal\BlogPessoal\obj\Debug\net5.0\BlogPessoal.xml
